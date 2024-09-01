@@ -57,3 +57,6 @@ class BlogPost(APIView):
             Targetobject.delete()
             return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
         return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
+    
+    def test(self, request):
+        print("Hello World")
