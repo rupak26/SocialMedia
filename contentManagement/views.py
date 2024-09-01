@@ -17,14 +17,18 @@ class BlogPost(APIView):
         serializer = userBlogPostSerialization(data=request.data)
         if serializer.is_valid():
             validate = dict(serializer.data)
-            newBlogPost = userBlogPost(title = validate['title'] , description = validate['description'] ,   created_by = User(request.user.id))
+            newBlogPost = userBlogPost(
+                title = validate['title'] ,
+                description = validate['description'] ,
+                created_by = request.user
+            )
             newBlogPost.save() 
             okay = userBlogPostSerialization(newBlogPost)
             return Response(okay.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)
     
     def get(self, request):
-        created_by = request.query_params.get('created_by',None)
+        created_by = request.user.id
         if created_by is not None:
             Targetobject = userBlogPost.objects.filter(created_by = created_by)
             serializer = userBlogPostSerialization(Targetobject,many = True)
@@ -42,8 +46,8 @@ class BlogPost(APIView):
                return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
         
+        
     def patch(self, request):
-        id = request.query_params.get('id',None)
         if id is not None:
             Targetobject = userBlogPost.objects.filter(id = id)
             serializer = userBlogPostSerialization(Targetobject,data=request.data,Partial=True,many = True)
@@ -51,12 +55,20 @@ class BlogPost(APIView):
         return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
     
     def delete(self, request):
+        created_by = request.user.id
         id = request.query_params.get('id',None)
-        if id is not None:
-            Targetobject = userBlogPost.objects.filter(id = id)
-            Targetobject.delete()
-            return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
-        return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
+        Targetobject = userBlogPost.objects.get(created_by=created_by,id = id)
+        Targetobject.delete()
+        return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
     
-    def test(self, request):
-        print("Hello World")
+    
+    
+class BlogView(APIView):
+    
+    def get(self,request):
+        blog_list = userBlogPost.objects.all()
+        serializer = userBlogPostSerialization(blog_list,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+        
+    
+
