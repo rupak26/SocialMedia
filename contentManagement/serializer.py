@@ -9,7 +9,6 @@ class userBlogCommentSerialization(serializers.ModelSerializer):
      
 
 class userBlogPostSerialization(serializers.ModelSerializer):
-    comment = userBlogCommentSerialization(many = True , read_only = True)
     created_by = serializers.ReadOnlyField(source = 'created_by.id')
     class Meta:
           model = userBlogPost
@@ -18,3 +17,6 @@ class userBlogPostSerialization(serializers.ModelSerializer):
           def create(self, validated_data):
               return userBlogPost.create(validated_data)
           
+class userParamSerialization(serializers.Serializer):
+     title = serializers.CharField(required = False)
+     description = serializers.CharField(required = False)

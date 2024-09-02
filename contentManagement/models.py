@@ -10,7 +10,7 @@ class userBlogPost(models.Model):
         ('published', 'Published'),
       ]
       title = models.CharField(max_length=100)
-      description = models.TextField()
+      description = models.CharField(max_length=500)
       status = models.CharField(max_length=20,choices=STATUS_CHOICES,default='draft')
       created_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name='posts')
       created = models.DateTimeField(auto_now_add=True)

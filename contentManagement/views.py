@@ -1,14 +1,9 @@
-from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.views import APIView 
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated 
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken
-from .serializer import userBlogPostSerialization 
-from .models import userBlogComment , userBlogPost 
-from UserManagement.models import User
-
+from rest_framework.permissions import IsAuthenticated , AllowAny
+from .serializer import userBlogPostSerialization , userParamSerialization
+from .models import userBlogPost , User
 
 class BlogPost(APIView):
     permission_classes = [IsAuthenticated]
@@ -48,10 +43,13 @@ class BlogPost(APIView):
         
         
     def patch(self, request):
+        id = request.query_params.get('id',None)
         if id is not None:
             Targetobject = userBlogPost.objects.filter(id = id)
-            serializer = userBlogPostSerialization(Targetobject,data=request.data,Partial=True,many = True)
-            return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
+            serializer = userBlogPostSerialization(Targetobject,data=request.data,partial=True)
+            if serializer.is_valid():
+               serializer.save()
+               return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
     
     def delete(self, request):
@@ -63,12 +61,31 @@ class BlogPost(APIView):
     
     
     
-class BlogView(APIView):
-    
+class BlogSearch(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        keyword = request.query_params.get('keyword',None)
+        print("===================")
+        print(keyword)
+        print("===================")
+        if keyword is not None:
+           posts = userBlogPost.objects.filter(title__icontains=keyword) | userBlogPost.objects.filter(description__icontains=keyword)
+           serializer = userParamSerialization(posts, many=True)
+           if serializer.data == []:
+               return Response({'msg' : 'No related data'},status=status.HTTP_204_NO_CONTENT)
+           return Response(serializer.data, status=status.HTTP_200_OK)
+        #    for obj in serializer.data:
+        #        if obj == validated_data:
+        #            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response({'msg' : 'Not valid data'},status=status.HTTP_204_NO_CONTENT)
+ 
+
+class BlogView(APIView):  
+    permission_classes = [AllowAny]
     def get(self,request):
-        blog_list = userBlogPost.objects.all()
-        serializer = userBlogPostSerialization(blog_list,many=True)
+        posts = userBlogPost.objects.select_related('created_by').all()
+        serializer = userBlogPostSerialization(posts,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
         
     
-

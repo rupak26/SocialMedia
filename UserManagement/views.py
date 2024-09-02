@@ -1,6 +1,7 @@
 from .models import User
 from .serializers import UserRegisterSerializer , VerifyRegisterSerializer , loginSerializer ,PasswordResetSerializer,userForgetPassword
 from django.contrib.auth import authenticate
+from django.contrib.auth import logout
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.response import Response
@@ -83,7 +84,14 @@ class userLoginView(APIView):
             return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
+class userLogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        refresh_token = request.data.get('refresh')
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response({'msg' : 'Logout Succesfully'},status=status.HTTP_200_OK)
+    
 class ForgetPassword(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
