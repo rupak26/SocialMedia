@@ -20,7 +20,7 @@ class userBlogPost(models.Model):
             return self.title
       
 class userBlogComment(models.Model):
-      post = models.CharField(max_length=100)
+      post = models.ForeignKey(userBlogPost, related_name='comments', on_delete=models.CASCADE)
       comment_by = models.ForeignKey(User,related_name='user_id',on_delete=models.CASCADE)
       body = models.TextField() 
       created = models.DateTimeField(auto_now_add=True)
