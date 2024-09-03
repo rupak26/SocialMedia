@@ -3,13 +3,17 @@ from rest_framework import serializers, viewsets
 
 
 class userBlogCommentSerialization(serializers.ModelSerializer):
+     comment_by = serializers.ReadOnlyField(source = 'comment_by.id')
      class Meta:
           model = userBlogComment
           fields = '__all__'
-     
+          
+          def create(self, validated_data):
+              return userBlogComment.create(validated_data)
 
 class userBlogPostSerialization(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source = 'created_by.id')
+    comments = userBlogCommentSerialization(many=True, read_only=True)
     class Meta:
           model = userBlogPost
           fields = '__all__'
