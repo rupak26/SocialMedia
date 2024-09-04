@@ -127,14 +127,14 @@ class BlogCommentView(APIView):
              return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
          else:
              return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
-         
+   
     def put(self, request):
         id = request.query_params.get('id')
         if id:
-            comment = userBlogComment.objects.filter('id').first()
+            comment = userBlogComment.objects.filter(id=id).first()
             if not comment:
                 return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
-                
+             
             serializer = userBlogCommentSerialization(comment,data=request.data)
             if not serializer.is_valid():
                 return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
