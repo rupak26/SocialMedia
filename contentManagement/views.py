@@ -101,47 +101,58 @@ class BlogView(APIView):
 
 class BlogCommentView(APIView):
     permission_classes = [IsAuthenticated]
-
+       
     def post(self,request):
          id = request.query_params.get('id')
          if id is not None:
             validate = dict(request.data)
             new_blogcomment = userBlogComment(
-                    body = validate['body'],
                     post = userBlogPost(id) ,
-                    comment_by = User(request.user.id)
+                    comment_by = User(request.user.id) ,
+                    body = validate['body'],
             )
             new_blogcomment.save()
             serializer = userBlogCommentSerialization(new_blogcomment)
             return Response(serializer.data,status=status.HTTP_200_OK)
          else:
             return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
-
+    
+    def get(self,request):
+         post_id = request.query_params.get('post_id')
+         if post_id is not None:
+             comment = userBlogComment.objects.filter(post = post_id)
+             serializer = userBlogCommentSerialization(comment,many=True)
+             if not serializer.data:
+                 return Response({'msg' : 'This Post has No Comment'},status=status.HTTP_204_NO_CONTENT)
+             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
+         else:
+             return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
+         
     def put(self, request):
         id = request.query_params.get('id')
-        if id is not None:
-            post = userBlogComment.objects.filter(id = id)
-            if not post:
-                 return Response({'msg':'Permission Denied'},status=status.HTTP_404_NOT_FOUND)
-            
-            serializer = userBlogCommentSerialization(post,data=request.data)
-
+        if id:
+            comment = userBlogComment.objects.filter('id').first()
+            if not comment:
+                return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
+                
+            serializer = userBlogCommentSerialization(comment,data=request.data)
             if not serializer.is_valid():
-               return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
-            
+                return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
+                
             serializer.save()
             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         else:
-            return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'msg': 'Comment Id not Found'},status=status.HTTP_404_NOT_FOUND)
+        
     
     def patch(self, request):
         id = request.query_params.get('id')
-        if id is not None:
-            post = userBlogComment.objects.filter(id = id)
-            if not post:
-                 return Response({'msg':'Permission Denied'},status=status.HTTP_404_NOT_FOUND)
+        if id:
+            comment = userBlogComment.objects.filter(id=id).first()
+            if not comment:
+                 return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
             
-            serializer = userBlogCommentSerialization(post,data=request.data,partial=True)
+            serializer = userBlogCommentSerialization(comment,data=request.data,partial=True)
 
             if not serializer.is_valid():
                return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
