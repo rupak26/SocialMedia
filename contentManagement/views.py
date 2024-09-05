@@ -40,11 +40,10 @@ class BlogPost(APIView):
 
         if not post:
             return Response({'msg':'Permission Denied'},status=status.HTTP_404_NOT_FOUND)
-        
+
         serializer = userBlogPostSerialization(post,data=request.data)
         if not serializer.is_valid():
-            return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
-            
+            return Response({'msg':'Invalid Data Surely'},status=status.HTTP_404_NOT_FOUND)
         serializer.save()
         return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
           
@@ -131,13 +130,14 @@ class BlogCommentView(APIView):
     def put(self, request):
         id = request.query_params.get('id')
         if id:
-            comment = userBlogComment.objects.filter(id=id).first()
-            if not comment:
+            try:
+                comment = userBlogComment.objects.get(id=id)
+            except userBlogComment.DoesNotExist:
                 return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
-             
-            serializer = userBlogCommentSerialization(comment,data=request.data)
+            
+            serializer = userBlogCommentSerialization(comment,data=request.data,partial=True)
             if not serializer.is_valid():
-                return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
+                return Response({'msg':'Invalid Data Surely'},status=status.HTTP_404_NOT_FOUND)
                 
             serializer.save()
             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
