@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.base_user import AbstractBaseUser
-from .user_manager import UserManager
+from .user_manager import userManager
 
 
 class User(AbstractBaseUser):
@@ -16,7 +16,7 @@ class User(AbstractBaseUser):
     otp = models.CharField(max_length=4)
     is_verified = models.BooleanField(default=False)
     reset_pass = models.CharField(max_length=20)
-    objects = UserManager()
+    objects = userManager()
     USERNAME_FIELD = 'email'
 
     def __str__(self):

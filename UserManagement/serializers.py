@@ -11,11 +11,11 @@ class VerifyRegisterSerializer(serializers.Serializer):
     email = serializers.CharField()
     otp = serializers.CharField()
 
-class loginSerializer(serializers.Serializer):
+class LoginSerializer(serializers.Serializer):
     email = serializers.CharField()
     password = serializers.CharField()
         
-class userForgetPassword(serializers.Serializer):
+class UserForgetPassword(serializers.Serializer):
     email = serializers.CharField()
 
 class PasswordResetSerializer(serializers.Serializer):
