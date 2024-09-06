@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from .serializer import UserBlogPostSerialization ,UserBlogCommentSerialization
 from .models import UserBlogPost,UserBlogComment,User 
-from datetime import datetime
+from django.utils import timezone
 
 
 class BlogPost(APIView):
@@ -41,16 +41,15 @@ class BlogPost(APIView):
     def put(self, request):
         try:
             post = UserBlogPost.objects.filter(
-                id=request.query_params.get('id'),
+                id=request.query_params.get('post_id'),
                 created_by=request.user.id
             ).last()
             if not post:
                 return Response({'msg':'Permission Denied'},status=status.HTTP_404_NOT_FOUND)
-            post.modified = datetime.now()
             serializer = UserBlogPostSerialization(post,data=request.data)
             if not serializer.is_valid():
                 return Response({'msg':'Invalid Data Surely'},status=status.HTTP_404_NOT_FOUND)
-            serializer.save()
+            serializer.save(modified = timezone.now())
             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         except Exception as error:
             return Response(error,status=status.HTTP_400_BAD_REQUEST)
@@ -69,7 +68,7 @@ class BlogPost(APIView):
             
             serializer = UserBlogPostSerialization(post,data=request.data,partial=True)
             if serializer.is_valid():
-                serializer.save()
+                serializer.save(modified = timezone.now())
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             else:
                 return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 
@@ -147,6 +146,7 @@ class BlogCommentView(APIView):
                 serializer = UserBlogCommentSerialization(comment,many=True)
                 if not serializer.data:
                     return Response({'msg' : 'This Post has No Comment'},status=status.HTTP_204_NO_CONTENT)
+                
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
@@ -165,8 +165,8 @@ class BlogCommentView(APIView):
                 serializer = UserBlogCommentSerialization(comment,data=request.data,partial=True)
                 if not serializer.is_valid():
                     return Response({'msg':'Invalid Data Surely'},status=status.HTTP_404_NOT_FOUND)
-                    
-                serializer.save()
+                
+                serializer.save(modified=timezone.now())
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'msg': 'Comment Id not Found'},status=status.HTTP_404_NOT_FOUND)
@@ -186,7 +186,7 @@ class BlogCommentView(APIView):
                 if not serializer.is_valid():
                    return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
                 
-                serializer.save()
+                serializer.save(modified=timezone.now())
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
