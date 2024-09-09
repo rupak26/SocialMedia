@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated , AllowAny
 from .serializer import UserBlogPostSerialization ,UserBlogCommentSerialization
 from .models import UserBlogPost,UserBlogComment,User 
 from django.utils import timezone
-
+from rest_framework.pagination import LimitOffsetPagination
 
 class BlogPost(APIView):
     permission_classes = [IsAuthenticated]
@@ -90,23 +90,27 @@ class BlogPost(APIView):
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     
-
+# ALL POST WITH PROPER PAGINATION AND SEARCH 
 class BlogView(APIView):  
     permission_classes = [AllowAny]
-
+    pagination_class = LimitOffsetPagination
     def get(self, request):
+        offset = int(request.query_params.get('offset',0))
+        limit = int(request.query_params.get('limit',0))
         try:
             keyword = request.query_params.get('keyword',None)
             if keyword is not None:
                 post = UserBlogPost.objects.filter(title__icontains=keyword) | UserBlogPost.objects.filter(description__icontains=keyword) | UserBlogPost.objects.filter(status__icontains=keyword)
-                serializer = UserBlogPostSerialization(post, many=True)
+                paginated_queryset = self.pagination_class().paginate_queryset(post, request)
+                serializer = UserBlogPostSerialization(paginated_queryset, many=True)
                 if not serializer.data:
                     return Response({'msg' : 'No related data'},status=status.HTTP_204_NO_CONTENT)
                 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 posts = UserBlogPost.objects.select_related('created_by').all()
-                serializer = UserBlogPostSerialization(posts,many=True)
+                paginated_queryset = self.pagination_class().paginate_queryset(posts, request)
+                serializer = UserBlogPostSerialization(paginated_queryset, many=True)
                 return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -210,7 +214,6 @@ class BlogCommentView(APIView):
 
 class BlogPostCommentView(APIView):
     permission_classes = [AllowAny]
-
     def get(self, request): 
         try:
             post_id = request.query_params.get('post_id')
@@ -223,4 +226,3 @@ class BlogPostCommentView(APIView):
             return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
