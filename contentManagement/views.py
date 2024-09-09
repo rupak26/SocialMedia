@@ -14,15 +14,15 @@ class BlogPost(APIView):
         try:
             serializer = UserBlogPostSerialization(data=request.data)
             if serializer.is_valid():
-                validate = dict(serializer.data)
+                validate_data = dict(serializer.data)
                 new_blogPost = UserBlogPost(
-                    title = validate['title'] ,
-                    description = validate['description'] ,
+                    title = validate_data['title'] ,
+                    description = validate_data['description'] ,
                     created_by = request.user
                 )
                 new_blogPost.save() 
-                okay = UserBlogPostSerialization(new_blogPost)
-                return Response(okay.data,status=status.HTTP_201_CREATED)
+                postabledata = UserBlogPostSerialization(new_blogPost)
+                return Response(postabledata.data,status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -45,10 +45,10 @@ class BlogPost(APIView):
                 created_by=request.user.id
             ).last()
             if not post:
-                return Response({'msg':'Permission Denied'},status=status.HTTP_404_NOT_FOUND)
+                return Response({'msg':'Permission Denied'},status=status.HTTP_401_UNAUTHORIZED)
             serializer = UserBlogPostSerialization(post,data=request.data)
             if not serializer.is_valid():
-                return Response({'msg':'Invalid Data Surely'},status=status.HTTP_404_NOT_FOUND)
+                return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
             serializer.save(modified = timezone.now())
             return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
         except Exception as error:
@@ -56,15 +56,14 @@ class BlogPost(APIView):
           
     def patch(self, request):
         try: 
-            id=request.query_params.get('id')
+            post_id=request.query_params.get('post_id')
             created_by=request.user.id
         
             post = UserBlogPost.objects.filter(
-                id = id,
+                id = post_id,
                 created_by = created_by).last()
-            
             if post is None:
-                return Response({'msg':'Invalid User'},status=status.HTTP_403_FORBIDDEN)
+                return Response({'msg':'User Does Not Matched'},status=status.HTTP_403_FORBIDDEN)
             
             serializer = UserBlogPostSerialization(post,data=request.data,partial=True)
             if serializer.is_valid():
@@ -83,7 +82,7 @@ class BlogPost(APIView):
                 created_by=created_by,
                 id = id).last()
             if post is None:
-                return Response({'msg' : 'Invalid User'},status=status.HTTP_403_FORBIDDEN)
+                return Response({'msg' : 'User Does Not Match'},status=status.HTTP_403_FORBIDDEN)
         
             post.delete()
             return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
@@ -119,13 +118,13 @@ class BlogCommentView(APIView):
        
     def post(self,request):
         try:
-            id = request.query_params.get('id')
-            if id is not None:
+            post_id = request.query_params.get('post_id')
+            if post_id is not None:
                 validate_data = dict(request.data)
                 if not validate_data['body']:
                    return Response({'msg':'Empty comment can not be post'},status=status.HTTP_403_FORBIDDEN)
                 new_blogcomment = UserBlogComment(
-                        post = UserBlogPost(id) ,
+                        post = UserBlogPost(post_id) ,
                         comment_by = User(request.user.id) ,
                         body = validate_data['body'],
                 )
@@ -154,10 +153,10 @@ class BlogCommentView(APIView):
    
     def put(self, request):
         try:
-            id = request.query_params.get('id')
-            if id:
+            comment_id = request.query_params.get('comment_id')
+            if comment_id:
                 try:
-                    comment = UserBlogComment.objects.get(id=id)
+                    comment = UserBlogComment.objects.get(id=comment_id)
                 except UserBlogComment.DoesNotExist:
                     return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
                 
@@ -174,9 +173,9 @@ class BlogCommentView(APIView):
     
     def patch(self, request):
         try:
-            id = request.query_params.get('id')
-            if id:
-                comment = UserBlogComment.objects.filter(id=id).first()
+            comment_id = request.query_params.get('comment_id')
+            if comment_id:
+                comment = UserBlogComment.objects.filter(id=comment_id).first()
                 if not comment:
                     return Response({'msg':'Not found any comment with this id'},status=status.HTTP_404_NOT_FOUND)
                 
@@ -194,12 +193,12 @@ class BlogCommentView(APIView):
      
     def delete(self, request):
         try:
-            id = request.query_params.get('id')
-            if id is not None:
-                comment = UserBlogComment.objects.filter(id = id)
+            comment_id = request.query_params.get('comment_id')
+            if comment_id is not None:
+                comment = UserBlogComment.objects.filter(id=comment_id)
 
             if comment is None:
-                return Response({'msg' : 'Invalid User'},status=status.HTTP_403_FORBIDDEN)
+                return Response({'msg' : 'User Does Not Matched'},status=status.HTTP_403_FORBIDDEN)
         
             comment.delete()
             return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
@@ -214,9 +213,9 @@ class BlogPostCommentView(APIView):
 
     def get(self, request): 
         try:
-            id = request.query_params.get('id')
-            if id is not None:
-                post = UserBlogPost.objects.filter(id = id)
+            post_id = request.query_params.get('post_id')
+            if post_id is not None:
+                post = UserBlogPost.objects.filter(id = post_id)
                 serializer = UserBlogPostSerialization(post,many = True)
                 if not serializer.data:
                     return Response({'msg' : 'No Post Available With This ID'},status=status.HTTP_204_NO_CONTENT)
