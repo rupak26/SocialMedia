@@ -13,30 +13,43 @@ class BlogPost(APIView):
     def post(self, request):
         try:
             serializer = UserBlogPostSerialization(data=request.data)
-            if serializer.is_valid():
-                validate_data = dict(serializer.data)
-                new_blogPost = UserBlogPost(
-                    title = validate_data['title'] ,
-                    description = validate_data['description'] ,
-                    created_by = request.user
-                )
-                new_blogPost.save() 
-                postabledata = UserBlogPostSerialization(new_blogPost)
-                return Response(postabledata.data,status=status.HTTP_201_CREATED)
-            return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)
+            if not serializer.is_valid():
+                return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            
+            validate_data = dict(serializer.data)
+            new_blogPost = UserBlogPost(
+                title = validate_data['title'] ,
+                description = validate_data['description'] ,
+                created_by = request.user
+            )
+            new_blogPost.save() 
+            postabledata = UserBlogPostSerialization(new_blogPost)    
+            return Response(postabledata.data,status=status.HTTP_200_OK)  
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def get(self, request):
         try:
             created_by = request.user.id
-            if created_by is not None:
-                post = UserBlogPost.objects.filter(created_by = created_by)
-                serializer = UserBlogPostSerialization(post,many = True)
-                return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
-            return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
+            post = UserBlogPost.objects.filter(
+                created_by = created_by
+            )
+            if not post:
+                return Response({
+                    'message':'User Not Found'}
+                    ,status=status.HTTP_404_NOT_FOUND)
+            
+            serializer = UserBlogPostSerialization(post,many = True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+            
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     def put(self, request):
         try:
@@ -45,14 +58,18 @@ class BlogPost(APIView):
                 created_by=request.user.id
             ).last()
             if not post:
-                return Response({'msg':'Permission Denied'},status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'msg':'User Does Not Matched'},status=status.HTTP_401_UNAUTHORIZED)
             serializer = UserBlogPostSerialization(post,data=request.data)
             if not serializer.is_valid():
-                return Response({'msg':'Invalid Data'},status=status.HTTP_404_NOT_FOUND)
+                return Response(serializer.errors,status=status.HTTP_404_NOT_FOUND)
+            
             serializer.save(modified = timezone.now())
-            return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
+            return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
           
     def patch(self, request):
         try: 
@@ -68,11 +85,14 @@ class BlogPost(APIView):
             serializer = UserBlogPostSerialization(post,data=request.data,partial=True)
             if serializer.is_valid():
                 serializer.save(modified = timezone.now())
-                return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
+                return Response(serializer.data,status=status.HTTP_200_OK)
             else:
                 return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST) 
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
  
     def delete(self, request):
         try:
@@ -87,10 +107,14 @@ class BlogPost(APIView):
             post.delete()
             return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
     
 # ALL POST WITH PROPER PAGINATION AND SEARCH 
+
 class BlogView(APIView):  
     permission_classes = [AllowAny]
     pagination_class = LimitOffsetPagination
@@ -113,7 +137,10 @@ class BlogView(APIView):
                 serializer = UserBlogPostSerialization(paginated_queryset, many=True)
                 return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
 
@@ -138,7 +165,10 @@ class BlogCommentView(APIView):
             else:
                 return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
         except Exception as error:
-             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)     
+             return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)  
     
     def get(self,request):
          try:
@@ -153,7 +183,10 @@ class BlogCommentView(APIView):
             else:
                 return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
          except Exception as error:
-              return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+             return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
    
     def put(self, request):
         try:
@@ -173,7 +206,10 @@ class BlogCommentView(APIView):
             else:
                 return Response({'msg': 'Comment Id not Found'},status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def patch(self, request):
         try:
@@ -193,7 +229,10 @@ class BlogCommentView(APIView):
             else:
                 return Response({'msg' : 'Post Id Not Found'},status=status.HTTP_401_UNAUTHORIZED)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)    
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR) 
      
     def delete(self, request):
         try:
@@ -207,7 +246,10 @@ class BlogCommentView(APIView):
             comment.delete()
             return Response({'msg' : 'Content Deleted'},status=status.HTTP_200_OK)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 ## ONE SINGLE POST AND ALL ITS COMMENT 
@@ -225,4 +267,7 @@ class BlogPostCommentView(APIView):
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
             return Response({'msg' : 'No Post Available With This ID'},status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
-            return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({
+                'message' : 'Error on fetching',
+                'Error' : error.__str__()
+            },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
