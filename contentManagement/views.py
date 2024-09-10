@@ -36,14 +36,13 @@ class BlogPost(APIView):
             created_by = request.user.id
             post = UserBlogPost.objects.filter(
                 created_by = created_by
-            )
+            ).values()
             if not post:
                 return Response({
                     'message':'User Not Found'}
                     ,status=status.HTTP_404_NOT_FOUND)
             
-            serializer = UserBlogPostSerialization(post,many = True)
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            return Response(post,status=status.HTTP_200_OK)
             
         except Exception as error:
             return Response({
