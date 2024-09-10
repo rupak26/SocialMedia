@@ -221,8 +221,8 @@ class BlogPostCommentView(APIView):
                 post = UserBlogPost.objects.filter(id = post_id)
                 serializer = UserBlogPostSerialization(post,many = True)
                 if not serializer.data:
-                    return Response({'msg' : 'No Post Available With This ID'},status=status.HTTP_204_NO_CONTENT)
+                    return Response(serializer.errors,status=status.HTTP_204_NO_CONTENT)
                 return Response(serializer.data,status=status.HTTP_202_ACCEPTED)
-            return Response({'msg':'User Not Found'},status=status.HTTP_404_NOT_FOUND)
+            return Response({'msg' : 'No Post Available With This ID'},status=status.HTTP_404_NOT_FOUND)
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)

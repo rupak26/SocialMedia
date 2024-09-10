@@ -40,7 +40,7 @@ class UserRegistrationView(APIView):
             if serializer.is_valid():
                 validated_data = dict(serializer.data)
                 if User.objects.filter(email=validated_data['email']).exists():
-                    return Response({'msg' : 'User Alredy Exists'})
+                    return Response({'msg' : 'User Alredy Exists'},status=status.HTTP_207_MULTI_STATUS)
                 else:
                     user = User.objects.create_user(email=validated_data['email'], password=validated_data['password'])
                     user.save()
@@ -61,7 +61,7 @@ class VerifyRegistrationView(APIView):
                 user = User.objects.filter(email=email).first()
                 if not user:
                     return Response({
-                        'msg' : 'Email Does not exist in Database'
+                        'msg' : 'Email Does not exist'
                     },status=status.HTTP_404_NOT_FOUND)
                 if not user.otp == otp:
                     return Response({
@@ -77,7 +77,7 @@ class VerifyRegistrationView(APIView):
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-class userLoginView(APIView):
+class UserLoginView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
         try:
@@ -93,7 +93,7 @@ class userLoginView(APIView):
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-class userLogoutView(APIView):
+class UserLogoutView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request):
         try:
@@ -129,7 +129,7 @@ class ForgetPassword(APIView):
         except Exception as error:
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class userPasswordResetView(APIView):
+class UserPasswordResetView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
         try:
