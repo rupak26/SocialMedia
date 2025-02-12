@@ -45,49 +45,61 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
   python manage.py runserver
 
 **API Endpoints**
-Authentication
+**Authentication**
 
 Method	Endpoint	Description
   **Register a new user
   POST	/api/auth/register/	
+  
   **Login and receive JWT token
   POST	/api/auth/login/	
+  
   **Logout the user
   POST	/api/auth/logout/
+  
   **Activate account via OTP
   POST	/api/auth/activate/	
+  
   **Request password reset via OTP
   POST	/api/auth/reset-password/	
+  
   **Confirm new password
   POST	/api/auth/reset-password/confirm/	
-Blog Posts
+  
+**Blog Posts**
 
 Method	Endpoint	Description
   **List all blog posts
   GET	/api/posts/
+  
   **Create a new post
-  POST	/api/posts/	
+  POST	/api/posts/
+  
   **Retrieve a single post
   GET	/api/posts/{id}/	
+  
   **Update a post
   PUT	/api/posts/{id}/	
+  
   **Delete a post
   DELETE	/api/posts/{id}/	
   
-Comments
+**Comments**
 
 Method	Endpoint	Description
   **Add a comment to a post
   POST	/api/posts/{id}/comments/
+  
   **Edit a comment
   PUT	/api/comments/{id}/	
+  
   **Delete a comment
   DELETE	/api/comments/{id}/	
   
-Contribution
+**Contribution**
 Feel free to fork this repository, create a feature branch, and submit a pull request with improvements or bug fixes.
 
-License
+**License**
 This project is licensed under the MIT License.
 
 Made with ❤️ by Rupak Biswas
