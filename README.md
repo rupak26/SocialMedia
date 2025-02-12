@@ -1,4 +1,4 @@
-# Social Media API
+# Social Media APP
 
 A fully functional social media backend built with Django Rest Framework (DRF). This API provides user authentication, blog post management, a commenting system, and advanced filtering/searching capabilities.
 
