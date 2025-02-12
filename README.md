@@ -48,28 +48,41 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 Authentication
 
 Method	Endpoint	Description
-  POST	/api/auth/register/	Register a new user
-  POST	/api/auth/login/	Login and receive JWT token
-  POST	/api/auth/logout/	Logout the user
-  POST	/api/auth/activate/	Activate account via OTP
-  POST	/api/auth/reset-password/	Request password reset via OTP
-  POST	/api/auth/reset-password/confirm/	Confirm new password
-  
+  **Register a new user
+  POST	/api/auth/register/	
+  **Login and receive JWT token
+  POST	/api/auth/login/	
+  **Logout the user
+  POST	/api/auth/logout/
+  **Activate account via OTP
+  POST	/api/auth/activate/	
+  **Request password reset via OTP
+  POST	/api/auth/reset-password/	
+  **Confirm new password
+  POST	/api/auth/reset-password/confirm/	
 Blog Posts
 
 Method	Endpoint	Description
-  GET	/api/posts/	List all blog posts
-  POST	/api/posts/	Create a new post
-  GET	/api/posts/{id}/	Retrieve a single post
-  PUT	/api/posts/{id}/	Update a post
-  DELETE	/api/posts/{id}/	Delete a post
+  **List all blog posts
+  GET	/api/posts/
+  **Create a new post
+  POST	/api/posts/	
+  **Retrieve a single post
+  GET	/api/posts/{id}/	
+  **Update a post
+  PUT	/api/posts/{id}/	
+  **Delete a post
+  DELETE	/api/posts/{id}/	
   
 Comments
 
 Method	Endpoint	Description
-  POST	/api/posts/{id}/comments/	Add a comment to a post
-  PUT	/api/comments/{id}/	Edit a comment
-  DELETE	/api/comments/{id}/	Delete a comment
+  **Add a comment to a post
+  POST	/api/posts/{id}/comments/
+  **Edit a comment
+  PUT	/api/comments/{id}/	
+  **Delete a comment
+  DELETE	/api/comments/{id}/	
   
 Contribution
 Feel free to fork this repository, create a feature branch, and submit a pull request with improvements or bug fixes.
