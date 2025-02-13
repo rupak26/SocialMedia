@@ -50,63 +50,63 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 Method	Endpoint	Description
   **Register a new user :: 
   
-  POST	/api/auth/register/	
+  POST	/user/register/	
   
   **Login and receive JWT token ::
   
-  POST	/api/auth/login/	
+  POST	{/user/login/}	
   
   **Logout the user :: 
   
-  POST	/api/auth/logout/
+  POST	{/user/logout/}
   
   **Activate account via OTP :: 
   
-  POST	/api/auth/activate/	
+  POST	{/user/activate/}	
   
   **Request password reset via OTP :: 
-  POST	/api/auth/reset-password/	
+  POST	{/user/reset-password/}	
   
   **Confirm new password ::
-  POST	/api/auth/reset-password/confirm/	
+  POST	{/user/reset-password/confirm/}	
   
 **Blog Posts**
 
 Method	Endpoint	Description
   **List all blog posts ::
   
-  GET	/api/posts/
+  GET	{/content/posts/}
   
   **Create a new post ::
   
-  POST	/api/posts/
+  POST	{/content/posts/}
   
   **Retrieve a single post ::
   
-  GET	/api/posts/{id}/	
+  GET	{/content/posts/{id}/}	
   
   **Update a post ::
   
-  PUT	/api/posts/{id}/	
+  PUT	{/content/posts/{id}/}	
   
   **Delete a post ::
   
-  DELETE	/api/posts/{id}/	
+  DELETE	{/content/posts/{id}/}	
   
 **Comments**
 
 Method	Endpoint	Description
   **Add a comment to a post ::
   
-  POST	/api/posts/{id}/comments/
+  POST	{/comment/posts/{id}/comments/}
   
   **Edit a comment ::
   
-  PUT	/api/comments/{id}/	
+  PUT	{/comments/{id}/}	
   
   **Delete a comment :: 
   
-  DELETE	/api/comments/{id}/	
+  DELETE	{/comments/{id}/}	
   
 **Contribution**
 Feel free to fork this repository, create a feature branch, and submit a pull request with improvements or bug fixes.
