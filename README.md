@@ -56,7 +56,7 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 Method	Endpoint	Description
   **Register a new user :: 
   
-  POST	/user/register/	
+  POST	{**/user/register/**}	
   
   **Login and receive JWT token ::
   
