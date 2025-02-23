@@ -33,21 +33,21 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
    git clone https://github.com/rupak26/SocialMedia.git
    cd SocialMedia
 
-2.Create a virtual environment and activate it:
-  python -m venv venv
-  source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+2. Create a virtual environment and activate it:
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
-3.Install dependencies
-  pip install -r requirements.txt
+3. Install dependencies
+   pip install -r requirements.txt
 
-4.Apply Migration
-  python manage.py migrate
+4. Apply Migration
+   python manage.py migrate
 
-5.Create Superuser
-  python manage.py createsuperuser
+5. Create Superuser
+   python manage.py createsuperuser
 
-6.Run on development Server
-  python manage.py runserver
+6. Run on development Server
+   python manage.py runserver
 
 
 **API Endpoints**
