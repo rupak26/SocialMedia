@@ -54,34 +54,34 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 **Authentication**
 
 Method	Endpoint	Description
-  **Register a new user :: 
+  1. Register a new user :: 
   
   POST	{**/user/register/**}	
   
-  **Login and receive JWT token ::
+  2. Login and receive JWT token ::
   
   POST	{**/user/login/**}	
   
-  **Logout the user :: 
+  3. Logout the user :: 
   
   POST	{**/user/logout/**}
   
-  **Activate account via OTP :: 
+  4. Activate account via OTP :: 
   
   POST	{**/user/activate/**}	
   
-  **Request password reset via OTP :: 
+  5. Request password reset via OTP :: 
 
   POST	{**/user/reset-password/**}	
   
-  **Confirm new password ::
+  6. Confirm new password ::
 
   POST	{**/user/reset-password/confirm/**}	
   
 **Blog Posts**
 
 Method	Endpoint	Description
-  **List all blog posts ::
+**List all blog posts ::**
   
   GET	{**/content/posts/**}
   
