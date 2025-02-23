@@ -32,17 +32,23 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 1. Clone the repository:
    git clone https://github.com/rupak26/SocialMedia.git
    cd SocialMedia
+
 2.Create a virtual environment and activate it:
   python -m venv venv
   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
 3.Install dependencies
   pip install -r requirements.txt
+
 4.Apply Migration
   python manage.py migrate
+
 5.Create Superuser
   python manage.py createsuperuser
+
 6.Run on development Server
   python manage.py runserver
+
 
 **API Endpoints**
 **Authentication**
@@ -54,61 +60,64 @@ Method	Endpoint	Description
   
   **Login and receive JWT token ::
   
-  POST	{/user/login/}	
+  POST	{**/user/login/**}	
   
   **Logout the user :: 
   
-  POST	{/user/logout/}
+  POST	{**/user/logout/**}
   
   **Activate account via OTP :: 
   
-  POST	{/user/activate/}	
+  POST	{**/user/activate/**}	
   
   **Request password reset via OTP :: 
-  POST	{/user/reset-password/}	
+
+  POST	{**/user/reset-password/**}	
   
   **Confirm new password ::
-  POST	{/user/reset-password/confirm/}	
+
+  POST	{**/user/reset-password/confirm/**}	
   
 **Blog Posts**
 
 Method	Endpoint	Description
   **List all blog posts ::
   
-  GET	{/content/posts/}
+  GET	{**/content/posts/**}
   
   **Create a new post ::
   
-  POST	{/content/posts/}
+  POST	{**/content/posts/**}
   
   **Retrieve a single post ::
   
-  GET	{/content/posts/{id}/}	
+  GET	{**/content/posts/{id}/**}	
   
   **Update a post ::
   
-  PUT	{/content/posts/{id}/}	
+  PUT	{**/content/posts/{id}/**}	
   
   **Delete a post ::
   
-  DELETE	{/content/posts/{id}/}	
+  DELETE	{**/content/posts/{id}/**}	
   
 **Comments**
 
 Method	Endpoint	Description
   **Add a comment to a post ::
   
-  POST	{/comment/posts/{id}/comments/}
+  POST	{**/comment/posts/{id}/comments/**}
   
   **Edit a comment ::
   
-  PUT	{/comments/{id}/}	
+  PUT	{**/comments/{id}/**}	
   
   **Delete a comment :: 
   
-  DELETE	{/comments/{id}/}	
+  DELETE	{**/comments/{id}/**}	
   
 **Contribution**
+
 Feel free to fork this repository, create a feature branch, and submit a pull request with improvements or bug fixes.
 
 **License**
