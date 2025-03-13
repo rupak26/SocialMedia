@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'UserManagement',
     'rest_framework',
     'contentManagement',
+    'interactions',
     'rest_framework_simplejwt.token_blacklist',  
     'rest_framework.authtoken',
     'django_filters',
