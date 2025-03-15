@@ -56,65 +56,65 @@ A fully functional social media backend built with Django Rest Framework (DRF). 
 Method	Endpoint	Description
   1. Register a new user :: 
   ```
-       POST 	{**/user/register/**}	
+       POST 	                                                           /user/register/	
   ```
   2. Login and receive JWT token ::
   ```
-       POST	   {**/user/login/**}	
+       POST	                                                              /user/login/	
   ```
   3. Logout the user :: 
   ```
-       POST	   {**/user/logout/**}
+       POST	                                                             /user/logout/
   ```
   4. Activate account via OTP :: 
   ```
-       POST	   {**/user/activate/**}	
+       POST	                                                            /user/activate/	
   ```
   5. Request password reset via OTP :: 
   ```
-       POST	   {**/user/reset-password/**}	
+       POST	                                                     /user/reset-password/	
   ```
   6. Confirm new password ::
   ```
-       POST    {**/user/reset-password/confirm/**}	
+       POST                                              /user/reset-password/confirm/	
   ```
 **Blog Posts**
 
 Method	Endpoint	Description
 **List all blog posts ::**
   ```
-      GET	{**/content/posts/**}
+      GET	                                                          /content/posts/
   ```
   **Create a new post ::
   ```
-      POST	{**/content/posts/**}
+      POST	                                                          /content/posts/
   ```
   **Retrieve a single post ::
   ```
-      GET	{**/content/posts/{id}/**}	
+      GET	                                                      content/posts/{id}/
   ```
   **Update a post ::
   ```
-      PUT	{**/content/posts/{id}/**}	
+      PUT	                                                      content/posts/{id}/
   ```
   **Delete a post ::
   ```
-      DELETE	{**/content/posts/{id}/**}	
+      DELETE	                                                  /content/posts/{id}/	
   ```
 **Comments**
 
 Method	Endpoint	Description
   **Add a comment to a post ::
   ```
-     POST	{**/comment/posts/{id}/comments/**}
+     POST	                                           /comment/posts/{id}/comments/
   ```
   **Edit a comment ::
   ```
-      PUT	{**/comments/{id}/**}	
+      PUT	                                                        /comments/{id}/
   ```
   **Delete a comment :: 
   ```
-      DELETE	{**/comments/{id}/**}	
+      DELETE	                                                    /comments/{id}/
   ```
 **Contribution**
 
