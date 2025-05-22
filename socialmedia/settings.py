@@ -93,6 +93,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -159,7 +168,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    
+    'PAGE_SIZE': 10
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -167,7 +176,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rupakbiswas29bd@gmail.com'
-EMAIL_HOST_PASSWORD = 'vyyw wzmr fndx lacl '
+EMAIL_HOST_PASSWORD = 'auws hopb yszb cvxs '
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),

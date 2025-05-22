@@ -6,6 +6,7 @@ from .serializer import UserBlogPostSerialization ,UserBlogCommentSerialization
 from .models import UserBlogPost,UserBlogComment,User 
 from django.utils import timezone
 from rest_framework.pagination import LimitOffsetPagination
+from django.core.cache import cache
 
 class BlogPost(APIView):
     permission_classes = [IsAuthenticated]
@@ -32,17 +33,19 @@ class BlogPost(APIView):
             },status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     def get(self, request):
+        paginator = LimitOffsetPagination()
         try:
             created_by = request.user.id
             post = UserBlogPost.objects.filter(
                 created_by = created_by
             ).values()
+            
             if not post:
                 return Response({
                     'message':'User Not Found'}
                     ,status=status.HTTP_404_NOT_FOUND)
-            
-            return Response(post,status=status.HTTP_200_OK)
+            paginated_queryset = paginator.paginate_queryset(post, request)
+            return Response(paginated_queryset,status=status.HTTP_200_OK)
             
         except Exception as error:
             return Response({
@@ -52,6 +55,7 @@ class BlogPost(APIView):
         
     def put(self, request):
         try:
+            
             post = UserBlogPost.objects.filter(
                 id=request.query_params.get('post_id'),
                 created_by=request.user.id
@@ -116,24 +120,37 @@ class BlogPost(APIView):
 
 class BlogView(APIView):  
     permission_classes = [AllowAny]
-    pagination_class = LimitOffsetPagination
+  
     def get(self, request):
+        paginator = LimitOffsetPagination()
         offset = int(request.query_params.get('offset',0))
         limit = int(request.query_params.get('limit',0))
+
+        keyword = request.query_params.get('keyword',None)
+        cache_key = f"blogs:offset={offset}:limit={limit}:keyword={keyword}"
+
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return Response(cached_data, status=status.HTTP_200_OK)
+        
         try:
-            keyword = request.query_params.get('keyword',None)
-            if keyword is not None:
-                post = UserBlogPost.objects.filter(title__icontains=keyword) | UserBlogPost.objects.filter(description__icontains=keyword) | UserBlogPost.objects.filter(status__icontains=keyword)
-                paginated_queryset = self.pagination_class().paginate_queryset(post, request)
+            if keyword:
+                posts = UserBlogPost.objects.filter(title__icontains=keyword) | UserBlogPost.objects.filter(description__icontains=keyword) | UserBlogPost.objects.filter(status__icontains=keyword)
+                
+                paginated_queryset = paginator.paginate_queryset(posts, request)
                 serializer = UserBlogPostSerialization(paginated_queryset, many=True)
+
                 if not serializer.data:
                     return Response({'msg' : 'No related data'},status=status.HTTP_204_NO_CONTENT)
                 
+                cache.set(cache_key, paginated_queryset, timeout=300)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 posts = UserBlogPost.objects.select_related('created_by').all()
-                paginated_queryset = self.pagination_class().paginate_queryset(posts, request)
+                paginated_queryset = paginator.paginate_queryset(posts, request)
+
                 serializer = UserBlogPostSerialization(paginated_queryset, many=True)
+                cache.set(cache_key, paginated_queryset, timeout=300)
                 return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as error:
             return Response({
