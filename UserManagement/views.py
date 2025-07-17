@@ -12,7 +12,8 @@ from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken
 from django.core.mail import send_mail
 import random
 from django.conf import settings
-
+import logging 
+logger = logging.getLogger("view.UserManagement")
 
 def send_otp_via_mail(email):
     subject = 'Your email verifications email'
@@ -42,12 +43,17 @@ class UserRegistrationView(APIView):
                 if User.objects.filter(email=validated_data['email']).exists():
                     return Response({'msg' : 'User Alredy Exists'},status=status.HTTP_207_MULTI_STATUS)
                 else:
-                    user = User.objects.create_user(email=validated_data['email'], password=validated_data['password'])
+                    user = User(
+                            username=validated_data['username'],
+                            email=validated_data['email'], 
+                            password=validated_data['password']
+                        )
                     user.save()
                     send_otp_via_mail(validated_data['email'])
                     return Response({'msg':'Registration Successful'},status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         except Exception as error:
+            logger.error(f"{error}")
             return Response({
                 'message' : 'Error on fetching',
                 'Error' : error.__str__()
@@ -77,6 +83,7 @@ class VerifyRegistrationView(APIView):
                        'msg' : 'Account Verified'
                 })
         except Exception as error:
+            logger.error(f"{error}")
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
@@ -94,6 +101,7 @@ class UserLoginView(APIView):
                 return Response({"detail": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception as error:
+            logger.error(f"{error}")  
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 class UserLogoutView(APIView):
@@ -130,6 +138,7 @@ class ForgetPassword(APIView):
                     serializer._errors
                 },status=status.HTTP_409_CONFLICT)
         except Exception as error:
+            logger.error(f"{error}")
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UserPasswordResetView(APIView):
@@ -156,5 +165,6 @@ class UserPasswordResetView(APIView):
                     'msg' : 'Password Reset Successfully'
                 },status=status.HTTP_202_ACCEPTED)
         except Exception as error:
+            logger.error(f"{error}")  
             return Response(error,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

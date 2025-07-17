@@ -1,0 +1,34 @@
+development:
+  DATABASE:
+   NAME: "SocialMedia"
+   USERNAME: "postgres"
+   PASSWORD: "12345678"
+   HOST: "localhost"
+   PORT: 5432
+  LOG:
+   DIRECTORY: "socialmedia/logs/" 
+   NAME: "current.log"
+   SIZE: 20
+  EMAIL:
+   HOST: 
+   USERNAME: 
+   PASSWORD: 
+   PORT: 
+
+production:
+  DATABASE:
+   NAME: "SocialMedia"
+   USERNAME: "postgres"
+   PASSWORD: "12345678"
+   HOST: "localhost"
+   PORT: 5432
+  LOG:
+   DIRECTORY: "socialmedia/logs/" 
+   NAME: "current.log"
+   SIZE: 20
+  EMAIL:
+   HOST: 
+   USERNAME: 
+   PASSWORD: 
+   PORT: 
+
