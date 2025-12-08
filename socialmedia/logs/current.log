@@ -1,3 +1,233 @@
 2025-07-17 16:07:19,238 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
 2025-07-17 16:07:24,101 | django.request | WARNING | Bad Request: /user/register/
 2025-07-17 16:09:08,367 | django.request | WARNING | Bad Request: /user/register/
+2025-12-08 13:10:17,627 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:10:28,145 | django.request | WARNING | Not Found: /
+2025-12-08 13:10:28,493 | django.request | WARNING | Not Found: /favicon.ico
+2025-12-08 13:27:50,684 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:28:18,049 | django.request | ERROR | Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 444, in login
+    return LoginView.as_view(**defaults)(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/edit.py", line 150, in post
+    if form.is_valid():
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 197, in is_valid
+    return self.is_bound and not self.errors
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 192, in errors
+    self.full_clean()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 326, in full_clean
+    self._clean_form()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 342, in _clean_form
+    cleaned_data = self.clean()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/forms.py", line 362, in clean
+    self.confirm_login_allowed(self.user_cache)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/forms.py", line 22, in confirm_login_allowed
+    if not user.is_staff:
+AttributeError: 'User' object has no attribute 'is_staff'
+2025-12-08 13:28:48,779 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/user_manager.py changed, reloading.
+2025-12-08 13:29:11,216 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:29:26,800 | django.request | ERROR | Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 444, in login
+    return LoginView.as_view(**defaults)(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/base.py", line 143, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/generic/edit.py", line 150, in post
+    if form.is_valid():
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 197, in is_valid
+    return self.is_bound and not self.errors
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 192, in errors
+    self.full_clean()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 326, in full_clean
+    self._clean_form()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/forms/forms.py", line 342, in _clean_form
+    cleaned_data = self.clean()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/forms.py", line 362, in clean
+    self.confirm_login_allowed(self.user_cache)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/forms.py", line 22, in confirm_login_allowed
+    if not user.is_staff:
+AttributeError: 'User' object has no attribute 'is_staff'
+2025-12-08 13:37:09,209 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:37:24,649 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:44:05,232 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:44:22,563 | django.request | ERROR | Internal Server Error: /admin/
+Traceback (most recent call last):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 260, in wrapper
+    return self.admin_view(view, cacheable)(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 557, in index
+    app_list = self.get_app_list(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 541, in get_app_list
+    app_dict = self._build_app_dict(request, app_label)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 483, in _build_app_dict
+    has_module_perms = model_admin.has_module_permission(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/options.py", line 640, in has_module_permission
+    return request.user.has_module_perms(self.opts.app_label)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/functional.py", line 253, in inner
+    return func(_wrapped, *args)
+AttributeError: 'User' object has no attribute 'has_module_perms'
+2025-12-08 13:46:58,187 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:46:59,410 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:01,337 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:02,488 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:08,144 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:09,472 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:14,107 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:15,229 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:17,262 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:18,224 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:22,631 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:23,718 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:25,751 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:26,694 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:29,988 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:31,053 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:35,178 | django.utils.autoreload | INFO | /media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/UserManagement/models.py changed, reloading.
+2025-12-08 13:47:36,344 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:47:41,925 | django.request | ERROR | Internal Server Error: /admin/
+Traceback (most recent call last):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+psycopg2.errors.UndefinedColumn: column UserManagement_user.is_superuser does not exist
+LINE 1: ...t_user"."id", "UserManagement_user"."last_login", "UserManag...
+                                                             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 260, in wrapper
+    return self.admin_view(view, cacheable)(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/views/decorators/cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 229, in inner
+    if not self.has_permission(request):
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/admin/sites.py", line 202, in has_permission
+    return request.user.is_active and request.user.is_staff
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/functional.py", line 251, in inner
+    self._setup()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/utils/functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/middleware.py", line 37, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/middleware.py", line 17, in get_user
+    request._cached_user = auth.get_user(request)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/__init__.py", line 216, in get_user
+    user = backend.get_user(user_id)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/contrib/auth/backends.py", line 157, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/query.py", line 645, in get
+    num = len(clone)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/query.py", line 382, in __len__
+    self._fetch_all()
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/models/sql/compiler.py", line 1574, in execute_sql
+    cursor.execute(sql, params)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 122, in execute
+    return super().execute(sql, params)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/media/rupok/New Volume1/Pratice/SocialMedia/SocialMedia/venv/lib/python3.10/site-packages/django/db/backends/utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+django.db.utils.ProgrammingError: column UserManagement_user.is_superuser does not exist
+LINE 1: ...t_user"."id", "UserManagement_user"."last_login", "UserManag...
+                                                             ^
+
+2025-12-08 13:48:05,407 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:48:12,139 | django.request | WARNING | Not Found: /
+2025-12-08 13:51:57,659 | django.utils.autoreload | INFO | Watching for file changes with StatReloader
+2025-12-08 13:54:10,271 | django.request | WARNING | Not Found: /users
+2025-12-08 13:54:15,352 | django.request | WARNING | Not Found: /user
+2025-12-08 13:54:43,642 | django.request | WARNING | Method Not Allowed: /user/login/
+2025-12-08 13:56:48,147 | django.request | WARNING | Unauthorized: /content/post/
+2025-12-08 13:56:51,602 | django.request | WARNING | Unauthorized: /content/post/
+2025-12-08 13:57:18,697 | django.request | WARNING | Unauthorized: /content/post/
+2025-12-08 13:57:26,219 | django.request | WARNING | Unauthorized: /content/post/
